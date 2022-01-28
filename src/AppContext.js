@@ -13,11 +13,17 @@ function AppContextProvider(props) {
                 setPhotos(images)
             })
     }, [])
-
-    console.log(photos)
+    //console.log(photos)
+    function toggleFavorite(id) {
+        const newPhotos = [...photos]
+        const photoToChange = newPhotos.find(photo => photo.id === id)
+        photoToChange.isFavorite = !photoToChange.isFavorite
+        setPhotos(newPhotos)
+        console.log("toggleFavorite called for id=" + id)
+    }
 
     return (
-        <AppContext.Provider value={{ photos }}>
+        <AppContext.Provider value={{ photos, toggleFavorite }}>
             {props.children}
         </AppContext.Provider>
     )

@@ -5,10 +5,10 @@ import Image from "../components/Image"
 import { getClass } from "../utils"
 
 function Photos() {
-    const { photos } = useContext(AppContext)
-    console.log(photos)
+    const { photos, toggleFavorite } = useContext(AppContext)
+
     const images = photos.map((image, i) => (
-        <Image key={image.id} img={image.url} className={getClass(i)} />
+        <Image key={image.id} img={image} className={getClass(i)} />
     ))
     return (
         <main className="photos">
