@@ -4,6 +4,7 @@ const AppContext = createContext("");
 
 function AppContextProvider(props) {
     const [photos, setPhotos] = useState([])
+    const [cartItems, setCartItems] = useState([])
     const apiUrl = "https://raw.githubusercontent.com/bobziroll/scrimba-react-bootcamp-images/master/images.json"
 
     useEffect(() => {
@@ -13,17 +14,36 @@ function AppContextProvider(props) {
                 setPhotos(images)
             })
     }, [])
-    //console.log(photos)
+
     function toggleFavorite(id) {
         const newPhotos = [...photos]
         const photoToChange = newPhotos.find(photo => photo.id === id)
         photoToChange.isFavorite = !photoToChange.isFavorite
         setPhotos(newPhotos)
-        console.log("toggleFavorite called for id=" + id)
     }
 
+    function addPhotoToCart(newItem) {
+        setCartItems(prevItems => [...prevItems, newItem])
+    }
+
+    function removePhotoFromCart(itemToRemove) {
+        setCartItems(prevItems => prevItems.filter(item => item.id !== itemToRemove.id))
+    }
+
+    function isItemInCart(item) {
+        return cartItems.some(cartItem => cartItem.id === item.id)
+    }
+
+    console.log(cartItems)
     return (
-        <AppContext.Provider value={{ photos, toggleFavorite }}>
+        <AppContext.Provider value={{
+            photos,
+            toggleFavorite,
+            cartItems,
+            addPhotoToCart,
+            isItemInCart,
+            removePhotoFromCart
+        }}>
             {props.children}
         </AppContext.Provider>
     )
