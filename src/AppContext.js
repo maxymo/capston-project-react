@@ -34,7 +34,15 @@ function AppContextProvider(props) {
         return cartItems.some(cartItem => cartItem.id === item.id)
     }
 
-    console.log(cartItems)
+    function calculateTotal() {
+        return cartItems.length * 5.99
+    }
+
+    function placeOrder() {
+        console.log("Order placed!")
+        setCartItems([])
+    }
+
     return (
         <AppContext.Provider value={{
             photos,
@@ -42,7 +50,9 @@ function AppContextProvider(props) {
             cartItems,
             addPhotoToCart,
             isItemInCart,
-            removePhotoFromCart
+            removePhotoFromCart,
+            calculateTotal,
+            placeOrder
         }}>
             {props.children}
         </AppContext.Provider>
